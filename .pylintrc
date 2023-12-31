@@ -1,0 +1,14 @@
+[MAIN]
+disable=
+    missing-module-docstring,
+    missing-function-docstring,
+    missing-class-docstring,
+    too-few-public-methods,
+    redefined-builtin,
+    invalid-name
+
+[FORMAT]
+max-line-length=150
+
+[SIMILARITIES]
+min-similarity-lines=10
