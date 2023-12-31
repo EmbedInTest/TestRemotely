@@ -10,13 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
+      - run: pip install pipenv
       - run: pipenv install --dev
-      - run: pylint **/*.py
+      - run: pipenv run pylint **/*.py
 
   pytest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
+      - run: pip install pipenv
       - run: pipenv install --dev
-      - run: pytest test
+      - run: pipenv run pytest test
