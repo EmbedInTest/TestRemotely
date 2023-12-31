@@ -1,10 +1,7 @@
 from getpass import getpass
 
-from PIORemotly import get_logger
 from PIORemotly.api import API
 from PIORemotly.config import Config
-
-logger = get_logger("PIORemotly::User")
 
 
 class User:
@@ -19,4 +16,3 @@ class User:
         config.username = username
         config.token = api.get_token(username, password)
         config.save()
-        logger.info("Success: Token written to config file.")

@@ -1,53 +1,16 @@
 #!/usr/bin/env python
 
-import os
-from pathlib import Path
+import click
 
-from PIORemotly import get_logger
-from PIORemotly.config import Config
-from PIORemotly.api import API
-from PIORemotly.run_execution import RunExecution
-from PIORemotly.user import User
-from PIORemotly.device import Device
-
-logger = get_logger("PIORemotly")
+from PIORemotly.cli import PIORemotlyCLI
 
 
-def main() -> None:
-    logger.debug(args)
-
-    config = Config.load()
-
-    if args.command == "login":
-        api = API(args.server)
-        User.login(api, config)
-
-    if not Config.file_exist():
-        logger.error("you need to login first!")
-        exit(1)
-
-    user = User(config.username, config.token)
-    api = API(args.server, user.token)
-
-    if args.command == "devices":
-        for device in Device.get_all(api):
-            print(device)
-
-    if args.command == "test":
-        workdir = Path(args.workdir)
-        if not workdir.exists:
-            logger.error("workdir does not exist!")
-            exit(1)
-        os.chdir(workdir)
-        unittest = RunExecution()
-        unittest.push(api)
-        logger.info("waiting for board to catch the test...")
-        # wait for board
-        # print log
-
-    if args.command == "agent":
-        pass
+@click.command(cls=PIORemotlyCLI, context_settings={"help_option_names": ['-h', '--help']})
+@click.option("--server", default="localhost:5001", help="PIORemotly Server")
+@click.pass_context
+def cli(ctx, server):
+    ctx.obj['SERVER'] = server
 
 
 if __name__ == "__main__":
-    main()
+    cli(obj={})  # pylint: disable=no-value-for-parameter

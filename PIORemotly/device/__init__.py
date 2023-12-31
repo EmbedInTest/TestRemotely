@@ -21,3 +21,4 @@ class Device:
 
     def last_status(self, api: API):
         status = api.get_device_status(self.id)
+        return status

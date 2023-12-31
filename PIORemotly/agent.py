@@ -1,7 +1,6 @@
 import time
 
 from PIORemotly.api import API
-from PIORemotly.run_execution import RunExecution
 
 
 class Agent:
@@ -11,7 +10,7 @@ class Agent:
         self._stop = False
 
     def start(self, api: API) -> None:
-        while (not self._stop):
+        while not self._stop:
             if self._check_for_run(api):
                 run = self._get_run(api)
                 run.run()
@@ -23,5 +22,5 @@ class Agent:
     def _check_for_run(self, api: API) -> bool:
         return api.check_for_run()
 
-    def _get_run(self, api: API) -> RunExecution:
+    def _get_run(self, api: API) -> object:
         pass

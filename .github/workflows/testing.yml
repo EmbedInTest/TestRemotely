@@ -1,0 +1,22 @@
+name: Testing
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+      - run: pipenv install --dev
+      - run: pylint **/*.py
+
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+      - run: pipenv install --dev
+      - run: pytest test

@@ -1,10 +1,5 @@
 from typing import Optional
-from urllib.request import HTTPBasicAuthHandler
 import requests
-
-from . import get_logger
-
-logger = get_logger("API")
 
 
 class API:
@@ -20,13 +15,14 @@ class API:
     def _post(self, path, data=None, files=None):
         url = f"{self.__get_server_url()}/{path}/"
         if files:
-            files = {"file": open(files, "rb")}
-        response = requests.post(url, data=data, files=files)
+            with open(files, "rb") as f:
+                files = {"file": f}
+        response = requests.post(url, data=data, files=files, timeout=5)
         return response.json()
 
     def _get(self, path):
         url = f"{self.__get_server_url()}/{path}/"
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers, timeout=5)
         assert response.status_code == 200, f"status code is: {response.status_code}, but should be 200!\nurl: {url}"
         return response.json()
 

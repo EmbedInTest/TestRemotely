@@ -20,11 +20,11 @@ class Config:
     def load(config_file=default_config_file) -> 'Config':
         if not Config.file_exist():
             return Config()
-        with open(config_file, "r") as outfile:
+        with open(config_file, "r", encoding="utf-8") as outfile:
             data = json.load(outfile)
             return Config(data['username'], data['token'])
 
     def save(self) -> None:
         data = {"username": self.username, "token": self.token}
-        with open(self.config_file, "w") as outfile:
+        with open(self.config_file, "w", encoding="utf-8") as outfile:
             json.dump(data, outfile)
